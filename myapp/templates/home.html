@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Uploader</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container py-5 text-center bg-secondary text-white">
+    <h1 class="mb-3">Upload Image</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" class="btn btn-danger" value="Upload">
+    </form>
+
+    <!-- Display uploaded images in rows of 4 -->
+    <div class="mt-5">
+      <h2>Uploaded Images</h2>
+      <div class="row">
+        {% for image in img %}
+          <div class="col-md-3 mb-4">
+            <img src="{{ image.photo.url }}" class="img-fluid" alt="uploaded image">
+          </div>
+          <!-- If the loop's counter is divisible by 4 and it's not the last iteration, start a new row -->
+          {% if forloop.counter|divisibleby:4 and not forloop.last %}
+            </div><div class="row">
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
